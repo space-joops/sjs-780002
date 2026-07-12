@@ -1,73 +1,70 @@
 import Link from "next/link";
-import BootLog from "./components/boot-log";
-import Starfield from "./components/starfield";
+import BestScore from "./components/best-score";
+import DoodleSky from "./components/doodle-sky";
 
-const TELEMETRY = [
-  { label: "MISSION", value: "SJS-780002" },
-  { label: "PHASE", value: "PREQUEL / T-00:00:09" },
-  { label: "PAYLOAD", value: "1 (one) very hungry mouth" },
-  { label: "HAZARD", value: "KESSLER CASCADE" },
+const RULES = [
+  { color: "#8ecbff", text: "쓰레기 냠냠 +10" },
+  { color: "#ffd166", text: "별은 +40" },
+  { color: "#ff8080", text: "가시는 아야!" },
 ];
 
 export default function Home() {
   return (
-    <div className="relative flex flex-1 flex-col overflow-hidden bg-[#04070a] font-mono text-zinc-300 selection:bg-emerald-400 selection:text-black">
-      <Starfield />
+    <div className="relative flex flex-1 flex-col overflow-hidden bg-[#141838] text-zinc-100 select-none">
+      <DoodleSky />
 
-      {/* CRT scanlines + vignette */}
-      <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(180deg,rgba(255,255,255,0.035)_0px,rgba(255,255,255,0.035)_1px,transparent_1px,transparent_3px)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.85)_100%)]" />
-
-      <header className="relative z-10 flex items-center justify-between border-b border-emerald-400/20 px-6 py-3 text-[11px] uppercase tracking-[0.2em] text-emerald-400/60">
-        <span>orbital debris remediation corps</span>
-        <span className="hidden sm:inline">est. 2061 · sol iii · low earth orbit</span>
+      <header className="relative z-10 flex items-center justify-between px-5 py-3 text-base text-zinc-500">
+        <span>🛰️ 궤도 청소 대작전</span>
+        <span className="hidden sm:inline">2061년 · 지구 저궤도</span>
       </header>
 
-      <main className="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center gap-10 px-6 py-16">
-        <div className="space-y-4">
-          <p className="text-xs uppercase tracking-[0.35em] text-emerald-400/60">
-            a prequel
-          </p>
-          <h1 className="text-5xl font-bold uppercase leading-none tracking-tight text-zinc-50 sm:text-7xl">
-            Space<span className="text-emerald-400">Joops</span>
-          </h1>
-          <p className="max-w-lg text-sm leading-7 text-zinc-400 sm:text-base">
-            Humanity littered the sky with 8,000 tonnes of dead satellites, spent
-            boosters, and frozen coolant. Somebody has to clean it up. Somebody
-            built a mouth for it.
-          </p>
-        </div>
+      {/* pb leaves the bottom strip empty — that's the mascot's playground.
+          The shadow keeps the copy readable when junk drifts behind it. */}
+      <main
+        className="relative z-10 mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center gap-3 px-6 pb-[30vh] text-center"
+        style={{ textShadow: "0 2px 10px rgba(10,12,30,0.95)" }}
+      >
+        <p className="-rotate-3 text-xl text-[#8ecbff]">SPACE JOOPS · 두들 에디션</p>
 
-        <div className="rounded-sm border border-emerald-400/25 bg-black/60 p-5 shadow-[0_0_40px_-12px_rgba(74,222,128,0.35)] backdrop-blur-[1px]">
-          <BootLog />
-        </div>
+        <h1
+          className="-rotate-2 text-6xl font-bold leading-none text-[#7ee8b2] sm:text-7xl"
+          style={{ textShadow: "0 4px 0 rgba(0,0,0,.45)" }}
+        >
+          우주 냠냠!
+        </h1>
 
-        <dl className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-zinc-800 pt-6 text-xs sm:grid-cols-4">
-          {TELEMETRY.map(({ label, value }) => (
-            <div key={label} className="space-y-1">
-              <dt className="uppercase tracking-[0.2em] text-zinc-600">{label}</dt>
-              <dd className="text-emerald-400/90">{value}</dd>
-            </div>
+        <p className="mt-1 text-xl leading-8 text-zinc-200">
+          하늘에 떠다니는 <span className="text-[#ffd166]">8,000톤</span>짜리 쓰레기 구름.
+          <br />
+          입 큰 친구가 전부 먹어치우러 갑니다.
+        </p>
+
+        <ul className="mt-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-lg text-zinc-300">
+          {RULES.map((r) => (
+            <li key={r.text} className="flex items-center gap-1.5">
+              <span
+                aria-hidden="true"
+                className="inline-block h-2.5 w-2.5 rounded-full"
+                style={{ background: r.color }}
+              />
+              {r.text}
+            </li>
           ))}
-        </dl>
+        </ul>
 
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Link
-            href="/play"
-            className="group flex h-12 items-center justify-center gap-3 rounded-sm bg-emerald-400 px-8 text-sm font-bold uppercase tracking-[0.2em] text-black transition-colors hover:bg-emerald-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-400"
-          >
-            <span className="animate-pulse group-hover:animate-none">▶</span>
-            Ignite
-          </Link>
-          <p className="text-xs uppercase tracking-[0.2em] text-zinc-600">
-            no rescue craft is scheduled
-          </p>
-        </div>
+        <Link
+          href="/play"
+          className="doodle-box animate-wiggle mt-4 inline-flex items-center gap-2 border-[3px] border-[#7ee8b2] bg-[#7ee8b2]/15 px-9 py-2 text-3xl font-bold text-[#7ee8b2] transition-transform hover:scale-105 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#7ee8b2]"
+        >
+          <span aria-hidden="true">▶</span> 게임 시작!
+        </Link>
+
+        <BestScore />
       </main>
 
-      <footer className="relative z-10 flex items-center justify-between border-t border-emerald-400/20 px-6 py-3 text-[11px] uppercase tracking-[0.2em] text-zinc-700">
-        <span>v0.1.0 — flight software unqualified</span>
-        <span className="hidden sm:inline">Δv remaining: sufficient (probably)</span>
+      <footer className="relative z-10 flex items-center justify-between px-5 py-3 text-sm text-zinc-600">
+        <span>v0.1.0 · 손으로 그린 우주</span>
+        <span className="hidden sm:inline">쓰다듬으면 따라와요</span>
       </footer>
     </div>
   );
